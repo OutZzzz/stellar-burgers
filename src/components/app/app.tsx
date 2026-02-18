@@ -12,7 +12,7 @@ import {
 import '../../index.css';
 import styles from './app.module.css';
 import { Routes, Route } from 'react-router-dom';
-import { AppHeader } from '@components';
+import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { ProtectedRoute } from '../protected-route';
 
 const App = () => (
@@ -43,6 +43,26 @@ const App = () => (
         element={<ProtectedRoute children={<ProfileOrders />} />}
       />
       <Route path='*' element={<NotFound404 />} />
+      <Route
+        path='/feed/:number'
+        element={<Modal title='' children={<OrderInfo />} onClose={() => {}} />}
+      />
+      <Route
+        path='/ingredients/:id'
+        element={
+          <Modal title='' children={<IngredientDetails />} onClose={() => {}} />
+        }
+      />
+      <Route
+        path='/profile/orders/:number'
+        element={
+          <ProtectedRoute
+            children={
+              <Modal title='' children={<OrderInfo />} onClose={() => {}} />
+            }
+          />
+        }
+      />
     </Routes>
   </div>
 );
