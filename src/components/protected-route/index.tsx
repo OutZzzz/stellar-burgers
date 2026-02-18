@@ -1,9 +1,5 @@
-
-
 type ProtectedRouteProps = {
-    children: React.ReactElement,
+  children: React.ReactElement;
 };
 
-export const ProtectedRoute = ({ children }: ProtectedRouteProps) {
-    return children
-}
+export const ProtectedRoute = ({ children }: ProtectedRouteProps) => children;
