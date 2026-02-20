@@ -7,7 +7,7 @@ export const ingredientsTrunk = createAsyncThunk(
   async () => getIngredientsApi()
 );
 
-export interface IIngredientState {
+interface IIngredientState {
   isLoading: boolean;
   data: TIngredient[] | null;
   error: string | null | undefined;
