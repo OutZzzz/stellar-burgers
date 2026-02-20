@@ -11,7 +11,6 @@ import { useDispatch } from 'react-redux';
 
 export const ConstructorPage: FC = () => {
   /** TODO: взять переменную из стора */
-  /* const isIngredientsLoading = false; */
   const isIngredientsLoading = useSelector(
     (state) => state.ingredients.isLoading
   );
