@@ -47,8 +47,8 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
           <p className='text text_type_main-default ml-2'>
             {userName || 'Личный кабинет'}
           </p>
-          </NavLink>
-        </div>
+        </NavLink>
+      </div>
     </nav>
   </header>
 );
