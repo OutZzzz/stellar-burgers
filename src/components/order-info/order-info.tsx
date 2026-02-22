@@ -2,9 +2,11 @@ import { FC, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
+import { useSelector } from '../../services/store';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
+  const { data } = useSelector((state) => state.ingredients);
   const orderData = {
     createdAt: '',
     ingredients: [],
@@ -15,7 +17,7 @@ export const OrderInfo: FC = () => {
     number: 0
   };
 
-  const ingredients: TIngredient[] = [];
+  const ingredients: TIngredient[] = data!;
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
