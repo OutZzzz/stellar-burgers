@@ -10,7 +10,7 @@ export const ingredientsTrunk = createAsyncThunk(
 interface IIngredientState {
   isLoading: boolean;
   data: TIngredient[] | null;
-  error: string | null | undefined;
+  error: string | null;
 }
 
 const initialState: IIngredientState = {
@@ -30,7 +30,7 @@ export const ingredientsSlice = createSlice({
     });
     builder.addCase(ingredientsTrunk.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.error.message;
+      state.error = action.error.message!;
     });
     builder.addCase(ingredientsTrunk.fulfilled, (state, action) => {
       state.isLoading = false;
