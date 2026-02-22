@@ -30,27 +30,29 @@ const App = () => {
         <Route path='/feed' element={<Feed />} />
         <Route
           path='/login'
-          element={<ProtectedRoute children={<Login />} />}
+          element={<ProtectedRoute onlyUnAuth children={<Login />} />}
         />
         <Route
           path='/register'
-          element={<ProtectedRoute children={<Register />} />}
+          element={<ProtectedRoute onlyUnAuth children={<Register />} />}
         />
         <Route
           path='/forgot-password'
-          element={<ProtectedRoute children={<ForgotPassword />} />}
+          element={<ProtectedRoute onlyUnAuth children={<ForgotPassword />} />}
         />
         <Route
           path='/reset-password'
-          element={<ProtectedRoute children={<ResetPassword />} />}
+          element={<ProtectedRoute onlyUnAuth children={<ResetPassword />} />}
         />
         <Route
           path='/profile'
-          element={<ProtectedRoute children={<Profile />} />}
+          element={<ProtectedRoute onlyUnAuth={false} children={<Profile />} />}
         />
         <Route
           path='/profile/orders'
-          element={<ProtectedRoute children={<ProfileOrders />} />}
+          element={
+            <ProtectedRoute onlyUnAuth={false} children={<ProfileOrders />} />
+          }
         />
         <Route path='*' element={<NotFound404 />} />
         <Route
@@ -73,6 +75,7 @@ const App = () => {
           path='/profile/orders/:number'
           element={
             <ProtectedRoute
+              onlyUnAuth={false}
               children={
                 <Modal title='' children={<OrderInfo />} onClose={() => {}} />
               }
