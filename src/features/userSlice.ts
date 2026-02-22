@@ -7,12 +7,16 @@ import {
 } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
-import { deleteCookie } from '../utils/cookie';
+import { deleteCookie, setCookie } from '../utils/cookie';
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
   async ({ email, password }: TLoginData) =>
-    await loginUserApi({ email, password })
+    await loginUserApi({ email, password }).then((data) => {
+      localStorage.setItem('refreshToken', data.refreshToken);
+      setCookie('accessToken', data.accessToken);
+      return data;
+    })
 );
 
 export const registerUser = createAsyncThunk(
