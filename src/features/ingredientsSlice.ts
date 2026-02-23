@@ -24,7 +24,8 @@ export const ingredientsSlice = createSlice({
   initialState,
   reducers: {},
   selectors: {
-    isLoadingSelector: (state) => state.isLoading
+    isLoadingSelector: (state) => state.isLoading,
+    ingredientsData: (state) => state.data
   },
   extraReducers: (builder) => {
     builder.addCase(ingredientsTrunk.pending, (state) => {
@@ -42,4 +43,5 @@ export const ingredientsSlice = createSlice({
   }
 });
 
-export const { isLoadingSelector } = ingredientsSlice.selectors;
+export const { isLoadingSelector, ingredientsData } =
+  ingredientsSlice.selectors;
