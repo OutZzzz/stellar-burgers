@@ -5,32 +5,31 @@ import { TIngredient } from '@utils-types';
 import { AppDispatch, useSelector } from '../../services/store';
 import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { getOrderByNumber } from '../../features/orderSlice';
+import {
+  getOrderByNumber,
+  ordersInfoDataSelector
+} from '../../features/orderSlice';
+import {
+  ingredientsData,
+  ingredientsTrunk
+} from '../../features/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const { data } = useSelector((state) => state.ingredients);
+  const ingData = useSelector(ingredientsData);
   const { number } = useParams();
   const dispatch: AppDispatch = useDispatch();
-  const orderNumber = number ? Number(number) : NaN;
-  /* const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  }; */
+
+  const orderData = useSelector(ordersInfoDataSelector(number!));
+  const ingredients: TIngredient[] = ingData ?? [];
 
   useEffect(() => {
-    if (!Number.isFinite(orderNumber)) return;
-    dispatch(getOrderByNumber(orderNumber));
-  }, [dispatch, orderNumber]);
-
-  const orderData = useSelector((state) => state.feed.orderModalData);
-
-  const ingredients: TIngredient[] = data ?? [];
+    if (!orderData) {
+      dispatch(getOrderByNumber(+number!));
+    }
+    if (!ingData) {
+      dispatch(ingredientsTrunk());
+    }
+  }, [dispatch, orderData, number]);
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
