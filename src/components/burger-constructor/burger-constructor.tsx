@@ -9,16 +9,20 @@ import {
   orderBurger,
   orderRequestSelector
 } from '../../features/orderSlice';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { userDataSelector } from '../../features/userSlice';
+import {
+  getBurgerBun,
+  getBurgerIngredients
+} from '../../features/constructorSlice';
 
 export const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
-  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
-  const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
+  const buns = useSelector(getBurgerBun);
+  const ingredients = useSelector(getBurgerIngredients);
   const dispatch: AppDispatch = useDispatch();
   const constructorItems = {
-    bun: bun,
+    bun: buns,
     ingredients: ingredients
   };
 
