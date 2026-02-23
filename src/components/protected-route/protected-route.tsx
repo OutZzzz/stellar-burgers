@@ -1,5 +1,6 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import {
+  isAuthCheckedSelector,
   loginUserRequestSelector,
   userDataSelector
 } from '../../features/userSlice';
@@ -15,15 +16,17 @@ export const ProtectedRoute = ({
   children,
   onlyUnAuth
 }: ProtectedRouteProps) => {
-  const isAuthChecked = useSelector(loginUserRequestSelector);
+  const location = useLocation();
+  const isAuthChecked = useSelector(isAuthCheckedSelector);
+  const isLoading = useSelector(loginUserRequestSelector);
   const user = useSelector(userDataSelector);
 
-  if (isAuthChecked) {
+  if (!isAuthChecked || isLoading) {
     return <Preloader />;
   }
 
   if (!onlyUnAuth && !user) {
-    return <Navigate replace to='/login' />;
+    return <Navigate replace to='/login' state={{ from: location }} />;
   }
 
   if (onlyUnAuth && user) {
