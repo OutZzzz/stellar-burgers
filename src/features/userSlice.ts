@@ -77,35 +77,33 @@ export const userSlice = createSlice({
         state.data = action.payload.user;
         state.loginUserRequest = false;
         state.isAuthChecked = true;
-      }),
-      builder
-        .addCase(registerUser.pending, (state) => {
-          state.loginUserRequest = true;
-          state.loginUserError = null;
-        })
-        .addCase(registerUser.rejected, (state, action) => {
-          state.loginUserRequest = false;
-          state.loginUserError = action.error.message!;
-        })
-        .addCase(registerUser.fulfilled, (state, action) => {
-          state.data = action.payload.user;
-          state.loginUserRequest = false;
-          state.isAuthChecked = true;
-        }),
-      builder
-        .addCase(updateUser.pending, (state) => {
-          state.loginUserRequest = true;
-          state.loginUserError = null;
-        })
-        .addCase(updateUser.rejected, (state, action) => {
-          state.loginUserRequest = false;
-          state.loginUserError = action.error.message!;
-        })
-        .addCase(updateUser.fulfilled, (state, action) => {
-          state.data = action.payload.user;
-          state.loginUserRequest = false;
-          state.isAuthChecked = true;
-        });
+      })
+      .addCase(registerUser.pending, (state) => {
+        state.loginUserRequest = true;
+        state.loginUserError = null;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loginUserRequest = false;
+        state.loginUserError = action.error.message!;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.data = action.payload.user;
+        state.loginUserRequest = false;
+        state.isAuthChecked = true;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.loginUserRequest = true;
+        state.loginUserError = null;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.loginUserRequest = false;
+        state.loginUserError = action.error.message!;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.data = action.payload.user;
+        state.loginUserRequest = false;
+        state.isAuthChecked = true;
+      });
   }
 });
 
