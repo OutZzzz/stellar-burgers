@@ -11,18 +11,36 @@ import {
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+  useMatch
+} from 'react-router-dom';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { ProtectedRoute } from '../protected-route';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../services/store';
+import { getUser } from '../../features/userSlice';
 
 const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch: AppDispatch = useDispatch();
   const background = location.state?.background;
+  const profileMatch = useMatch('/profile/orders/:number')?.params.number;
+  const feedMatch = useMatch('/feed/:number')?.params.number;
+  const orderNumber = profileMatch || feedMatch;
 
   const onClose = () => {
     navigate(-1);
   };
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>
@@ -57,31 +75,13 @@ const App = () => {
           }
         />
         <Route path='*' element={<NotFound404 />} />
-        <Route
-          path='/feed/:number'
-          element={
-            <Modal title='' children={<OrderInfo />} onClose={onClose} />
-          }
-        />
-        <Route
-          path='/ingredients/:id'
-          element={
-            <Modal
-              title='Детали ингредиента'
-              children={<IngredientDetails />}
-              onClose={onClose}
-            />
-          }
-        />
+        <Route path='/feed/:number' element={<OrderInfo />} />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
+
         <Route
           path='/profile/orders/:number'
           element={
-            <ProtectedRoute
-              onlyUnAuth={false}
-              children={
-                <Modal title='' children={<OrderInfo />} onClose={() => {}} />
-              }
-            />
+            <ProtectedRoute onlyUnAuth={false} children={<OrderInfo />} />
           }
         />
       </Routes>
@@ -100,7 +100,26 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <Modal title='' children={<OrderInfo />} onClose={onClose} />
+              <Modal
+                title={`#${orderNumber && orderNumber.padStart(6, '0')}`}
+                children={<OrderInfo />}
+                onClose={onClose}
+              />
+            }
+          />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <ProtectedRoute
+                onlyUnAuth={false}
+                children={
+                  <Modal
+                    title={`#${orderNumber && orderNumber.padStart(6, '0')}`}
+                    children={<OrderInfo />}
+                    onClose={onClose}
+                  />
+                }
+              />
             }
           />
         </Routes>
