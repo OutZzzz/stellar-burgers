@@ -1,4 +1,5 @@
 import {
+  getUserApi,
   loginUserApi,
   logoutApi,
   registerUserApi,
@@ -35,6 +36,10 @@ export const updateUser = createAsyncThunk(
   async (user: Partial<TRegisterData>) => await updateUserApi(user)
 );
 
+export const getUser = createAsyncThunk('user/getUser', async () =>
+  getUserApi()
+);
+
 interface IUserState {
   isAuthChecked: boolean;
   data: TUser | null;
@@ -59,6 +64,7 @@ export const userSlice = createSlice({
   },
   selectors: {
     loginUserRequestSelector: (state) => state.loginUserRequest,
+    isAuthCheckedSelector: (state) => state.isAuthChecked,
     userDataSelector: (state) => state.data,
     loginErrorSelector: (state) => state.loginUserError
   },
@@ -103,6 +109,21 @@ export const userSlice = createSlice({
         state.data = action.payload.user;
         state.loginUserRequest = false;
         state.isAuthChecked = true;
+      })
+      .addCase(getUser.pending, (state) => {
+        state.loginUserRequest = true;
+        state.loginUserError = null;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.loginUserRequest = false;
+        state.loginUserError = action.error.message ?? '';
+        state.isAuthChecked = true;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.data = action.payload.user;
+        state.isAuthChecked = true;
+        state.loginUserRequest = false;
+        state.loginUserError = null;
       });
   }
 });
@@ -111,7 +132,8 @@ export const { userLogout } = userSlice.actions;
 export const {
   loginUserRequestSelector,
   userDataSelector,
-  loginErrorSelector
+  loginErrorSelector,
+  isAuthCheckedSelector
 } = userSlice.selectors;
 
 export const logoutUser = createAsyncThunk(
