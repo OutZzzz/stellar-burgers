@@ -11,12 +11,14 @@ import {
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { ProtectedRoute } from '../protected-route';
 
 const App = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const background = location.state?.background;
 
   const onClose = () => {
     navigate(-1);
@@ -25,7 +27,7 @@ const App = () => {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Routes>
+      <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
         <Route
@@ -58,7 +60,7 @@ const App = () => {
         <Route
           path='/feed/:number'
           element={
-            <Modal title='' children={<OrderInfo />} onClose={() => {}} />
+            <Modal title='' children={<OrderInfo />} onClose={onClose} />
           }
         />
         <Route
@@ -83,6 +85,26 @@ const App = () => {
           }
         />
       </Routes>
+      {background && (
+        <Routes>
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal
+                title='Детали ингредиента'
+                children={<IngredientDetails />}
+                onClose={onClose}
+              />
+            }
+          />
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal title='' children={<OrderInfo />} onClose={onClose} />
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 };
