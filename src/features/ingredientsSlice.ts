@@ -23,6 +23,9 @@ export const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState,
   reducers: {},
+  selectors: {
+    isLoadingSelector: (state) => state.isLoading
+  },
   extraReducers: (builder) => {
     builder.addCase(ingredientsTrunk.pending, (state) => {
       state.isLoading = true;
@@ -38,3 +41,5 @@ export const ingredientsSlice = createSlice({
     });
   }
 });
+
+export const { isLoadingSelector } = ingredientsSlice.selectors;

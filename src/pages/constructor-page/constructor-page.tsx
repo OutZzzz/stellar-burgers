@@ -6,15 +6,15 @@ import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
 import { FC, useEffect } from 'react';
-import { ingredientsTrunk } from '../../features/ingredientsSlice';
+import {
+  ingredientsTrunk,
+  isLoadingSelector
+} from '../../features/ingredientsSlice';
 import { useDispatch } from 'react-redux';
 
 export const ConstructorPage: FC = () => {
   /** TODO: взять переменную из стора */
-  const isIngredientsLoading = useSelector(
-    (state) => state.ingredients.isLoading
-  );
-
+  const isIngredientsLoading = useSelector(isLoadingSelector);
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
