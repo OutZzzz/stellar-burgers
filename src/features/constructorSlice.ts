@@ -44,9 +44,15 @@ export const constructorSlice = createSlice({
       const [item] = state.ingredients.splice(fromIndex, 1);
       state.ingredients.splice(toIndex, 0, item);
     }
+  },
+  selectors: {
+    getBurgerIngredients: (state) => state.ingredients,
+    getBurgerBun: (state) => state.bun
   }
 });
 
 export const { addIngredient, removeIngredient, moveIngredient } =
   constructorSlice.actions;
 export const reducer = constructorSlice.reducer;
+export const { getBurgerIngredients, getBurgerBun } =
+  constructorSlice.selectors;
