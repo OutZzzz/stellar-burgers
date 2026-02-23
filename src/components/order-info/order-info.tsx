@@ -1,13 +1,19 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
-import { useSelector } from '../../services/store';
+import { AppDispatch, useSelector } from '../../services/store';
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getOrderByNumber } from '../../features/orderSlice';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
   const { data } = useSelector((state) => state.ingredients);
-  const orderData = {
+  const { number } = useParams();
+  const dispatch: AppDispatch = useDispatch();
+  const orderNumber = number ? Number(number) : NaN;
+  /* const orderData = {
     createdAt: '',
     ingredients: [],
     _id: '',
@@ -15,9 +21,16 @@ export const OrderInfo: FC = () => {
     name: '',
     updatedAt: 'string',
     number: 0
-  };
+  }; */
 
-  const ingredients: TIngredient[] = data!;
+  useEffect(() => {
+    if (!Number.isFinite(orderNumber)) return;
+    dispatch(getOrderByNumber(orderNumber));
+  }, [dispatch, orderNumber]);
+
+  const orderData = useSelector((state) => state.feed.orderModalData);
+
+  const ingredients: TIngredient[] = data ?? [];
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
