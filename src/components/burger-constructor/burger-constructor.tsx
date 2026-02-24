@@ -13,8 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { userDataSelector } from '../../features/userSlice';
 import {
   getBurgerBun,
-  getBurgerIngredients,
-  resetIngredients
+  getBurgerIngredients
 } from '../../features/constructorSlice';
 
 export const BurgerConstructor: FC = () => {
@@ -46,7 +45,6 @@ export const BurgerConstructor: FC = () => {
   };
   const closeOrderModal = () => {
     dispatch(clearOrderData());
-    dispatch(resetIngredients());
     navigate('/feed', { replace: true });
   };
 
