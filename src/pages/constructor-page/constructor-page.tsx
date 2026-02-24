@@ -5,21 +5,11 @@ import styles from './constructor-page.module.css';
 import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
-import { FC, useEffect } from 'react';
-import {
-  ingredientsTrunk,
-  isLoadingSelector
-} from '../../features/ingredientsSlice';
-import { useDispatch } from 'react-redux';
+import { FC } from 'react';
+import { isLoadingSelector } from '../../features/ingredientsSlice';
 
 export const ConstructorPage: FC = () => {
-  /** TODO: взять переменную из стора */
   const isIngredientsLoading = useSelector(isLoadingSelector);
-  const dispatch: AppDispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(ingredientsTrunk());
-  }, [dispatch]);
 
   return (
     <>
