@@ -12,7 +12,8 @@ export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
     const location = useLocation();
     const dispatch: AppDispatch = useDispatch();
 
-    const handleAdd = () => dispatch(addIngredient(ingredient));
+    const handleAdd = () =>
+      dispatch(addIngredient({ ...ingredient, id: crypto.randomUUID() }));
 
     return (
       <BurgerIngredientUI
