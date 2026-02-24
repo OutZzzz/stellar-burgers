@@ -24,6 +24,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../services/store';
 import { getUser } from '../../features/userSlice';
+import { ingredientsTrunk } from '../../features/ingredientsSlice';
 
 const App = () => {
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getUser());
+    dispatch(ingredientsTrunk());
   }, [dispatch]);
 
   return (
@@ -77,7 +79,6 @@ const App = () => {
         <Route path='*' element={<NotFound404 />} />
         <Route path='/feed/:number' element={<OrderInfo />} />
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
-
         <Route
           path='/profile/orders/:number'
           element={
