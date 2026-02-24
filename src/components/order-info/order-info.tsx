@@ -9,10 +9,7 @@ import {
   getOrderByNumber,
   ordersInfoDataSelector
 } from '../../features/orderSlice';
-import {
-  ingredientsData,
-  ingredientsTrunk
-} from '../../features/ingredientsSlice';
+import { ingredientsData } from '../../features/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
   const ingData = useSelector(ingredientsData);
@@ -25,9 +22,6 @@ export const OrderInfo: FC = () => {
   useEffect(() => {
     if (!orderData) {
       dispatch(getOrderByNumber(+number!));
-    }
-    if (!ingData) {
-      dispatch(ingredientsTrunk());
     }
   }, [dispatch, orderData, number]);
 
