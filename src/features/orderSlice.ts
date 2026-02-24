@@ -7,6 +7,7 @@ import {
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder, TOrdersData } from '@utils-types';
 import { RootState } from 'src/services/store';
+import { resetIngredients } from '../features/constructorSlice';
 
 export const getFeed = createAsyncThunk(
   'orders/feed',
@@ -20,7 +21,11 @@ export const getOrderByNumber = createAsyncThunk(
 
 export const orderBurger = createAsyncThunk(
   'orders/orderBurger',
-  async (data: string[]) => await orderBurgerApi(data)
+  async (data: string[], { dispatch }) =>
+    await orderBurgerApi(data).then((data) => {
+      dispatch(resetIngredients());
+      return data;
+    })
 );
 
 export const getOrders = createAsyncThunk(
