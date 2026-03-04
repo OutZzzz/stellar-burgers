@@ -21,7 +21,7 @@ export const getOrderByNumber = createAsyncThunk(
 
 export const orderBurger = createAsyncThunk(
   'orders/orderBurger',
-  async (data: string[], { dispatch }) => 
+  async (data: string[], { dispatch }) =>
     await orderBurgerApi(data).then((data) => {
       dispatch(resetIngredients());
       return data;
