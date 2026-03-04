@@ -40,7 +40,7 @@ export const getUser = createAsyncThunk('user/getUser', async () =>
   getUserApi()
 );
 
-interface IUserState {
+export interface IUserState {
   isAuthChecked: boolean;
   data: TUser | null;
   loginUserError: string | null;

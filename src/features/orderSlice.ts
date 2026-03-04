@@ -21,7 +21,7 @@ export const getOrderByNumber = createAsyncThunk(
 
 export const orderBurger = createAsyncThunk(
   'orders/orderBurger',
-  async (data: string[], { dispatch }) =>
+  async (data: string[], { dispatch }) => 
     await orderBurgerApi(data).then((data) => {
       dispatch(resetIngredients());
       return data;
@@ -33,7 +33,7 @@ export const getOrders = createAsyncThunk(
   async () => await getOrdersApi()
 );
 
-interface IOrderState {
+export interface IOrderState {
   orderData: TOrdersData | null;
   orderRequest: boolean;
   orderModalData: TOrder | null;
