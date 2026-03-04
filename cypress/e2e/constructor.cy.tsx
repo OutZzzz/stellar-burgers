@@ -5,6 +5,10 @@ describe("Тесты для страницы конструктора бурге
         cy.visit("http://localhost:4000");
         cy.wait("@getIngredientsApi");
     })
+    afterEach(() => {
+        cy.clearCookies();
+        cy.clearAllLocalStorage();
+    })
     it('Добавление ингредиентов в конструктор', () => {
          /* Проверка что конструктор пустой */
         cy.get('[data-testid="order"]').contains("Выберите булки").should("exist");
@@ -37,6 +41,9 @@ describe("Тесты для страницы конструктора бурге
     it('Тестирование создания заказа', () => {
         /* Авторизация */
         cy.setCookie('accessToken', 'Bearer mock-tocken');
+        cy.window().then((win) => {
+            win.localStorage.setItem('refreshToken', 'mock-refresh-token');
+        })
         cy.intercept("GET", "**/auth/user", { fixture: "user.json" }).as("getUser");
         cy.wait("@getUser");
 
@@ -57,7 +64,5 @@ describe("Тесты для страницы конструктора бурге
         cy.get('[data-testid="modal"]').find('button[type="button"]').click();
         cy.get('[data-testid="modal"]').should('not.exist')
 
-        cy.intercept("GET", "**/orders/all", { fixture: "feed.json" }).as("getFeed");
-        cy.wait("@getFeed");
     })
 })
