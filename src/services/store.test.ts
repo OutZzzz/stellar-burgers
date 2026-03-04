@@ -5,7 +5,7 @@ import { orderSlice } from '../features/orderSlice';
 import { rootReducer } from './store';
 
 describe('Инициализация rootReducer', () => {
-  it('Проверка корректности initialState', () => {
+  it('проверка что rootReducer инициализирует с корректным initialState', () => {
     const initialState = rootReducer(undefined, { type: '@@INIT' });
 
     expect(initialState).toEqual({
