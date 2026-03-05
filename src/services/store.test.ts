@@ -6,7 +6,7 @@ import { rootReducer } from './store';
 
 describe('Инициализация rootReducer', () => {
   it('проверка что rootReducer инициализирует с корректным initialState', () => {
-    const initialState = rootReducer(undefined, { type: '@@INIT' });
+    const initialState = rootReducer(undefined, { type: 'UNKNOWN_ACTION' });
 
     expect(initialState).toEqual({
       ingredients: ingredientsSlice.getInitialState(),
