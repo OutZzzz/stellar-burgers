@@ -47,6 +47,10 @@ describe("Тесты для страницы конструктора бурге
         cy.intercept("GET", "**/auth/user", { fixture: "user.json" }).as("getUser");
         cy.wait("@getUser");
 
+         /* Проверка что конструктор пустой */
+        cy.get('[data-testid="order"]').contains("Выберите булки").should("exist");
+        cy.get('[data-testid="order"]').contains("Выберите начинку").should("exist");
+
         /* Добавление ингредиентов */
         cy.get('[data-testid="ingredient-1"]').contains("button", "Добавить").click();
         cy.get('[data-testid="ingredient-2"]').contains("button", "Добавить").click();
