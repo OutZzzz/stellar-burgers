@@ -33,7 +33,7 @@ export const getOrders = createAsyncThunk(
   async () => await getOrdersApi()
 );
 
-interface IOrderState {
+export interface IOrderState {
   orderData: TOrdersData | null;
   orderRequest: boolean;
   orderModalData: TOrder | null;
